@@ -1,5 +1,8 @@
 <?php
     session_start();
+    if(isset($_SESSION['ERROR_IN_SIGNUP'])){
+        echo "<p align='center'><font color='red'>unwanted ERROR.</font></p><br>";
+    }
     if(isset($_POST['Bt2'])){
         header("location:index.php");
     }elseif(isset($_POST['Bt3'])){

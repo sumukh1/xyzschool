@@ -26,9 +26,38 @@
         }else if(!(isset($_POST['password']))||$_POST['password']==""){
             echo "<p align='center'><font color='red'>Enter password!</font></p>";
         }else{
-
+            $pass=$_POST['password'];
+            if(!(strlen($pass)>=8 && $pass==$_POST['cpassword'])){
+                echo "<p align='center'><font color='red'>Enter valid password!</font></p>";
+            }else{
+                $con=mysqli_connect("localhost","root","","xyzschool");
+                $id=rand(1000,9999);
+                $data=mysqli_query($con,"SELECT * FROM `s_login` WHERE `S_id`='$id'");
+                while(mysqli_num_rows($data)){
+                    $id=rand(1000,9999);
+                    $data=mysqli_query($con,"SELECT * FROM `s_login` WHERE `S_id`='$id'");
+                }
+                $body="Dear ".$name.".\nWelcome in smart system of xyz public school.\nYou successfully created an account on our system with Student ID: ".$id.".\nYou can login 24/7 by using Student id and your password.\nhttp://localhost/myphp/school/sLogin.php\nThank you.";
+                $email=$_SESSION['semail']
+                if(mail($email,"XYZ PUBLIC SCHOOL",$body,"phpotpmanager@gmail.com")){
+                    $password_hash=password_hash($pass);
+                    $name=$_POST['name'];
+                    $rollno=$_POST['rollno'];
+                    $dob=$_POST['dob'];
+                    $phone=$_POST['phone'];
+                    $class=$_POST['class'];
+                    $subject1=$_POST['subject1'];
+                    $subject2=$_POST['subject2'];
+                    $subject3=$_POST['subject3'];
+                    $data1=mysqli_query($con,"INSERT INTO `s_login`(`S_id`, `email`, `password_hash`) VALUES ('$id','$email','$password_hash')");
+                    $data1=mysqli_query($con,"INSERT INTO `s_details`(`S_id`, `phone`, `name`, `rollno`, `dob`, `class`, `subject1`, `subject2`, `subject3`) VALUES ('$id','$phone','$name','$rollno','$dob','$class','$subject1','$subject2','$subject3')"); 
+                }else{
+                    $_SESSION['ERROR_IN_SIGNUP']=1;
+                    header("location:sVerify.php");
+                }  
+            }
         }
-    }
+    
 ?>
 <html>
     <head>
@@ -78,6 +107,7 @@
                     <option value="Chemistry">Chemistry</option>
                     <option value="Biology">Biology</option>
                 </select>
+                Note.(password lenght is between 8 to 16 character)<br>
                 Password:<input type="password" name="password"><br>
                 Confirm password:<input type="password" name="cpassword"><br>
                 <button type="submit" name="B3"> Submit </button><br>
