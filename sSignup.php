@@ -37,11 +37,11 @@
                     $id=rand(1000,9999);
                     $data=mysqli_query($con,"SELECT * FROM `s_login` WHERE `S_id`='$id'");
                 }
-                $body="Dear ".$name.".\nWelcome in smart system of xyz public school.\nYou successfully created an account on our system with Student ID: ".$id.".\nYou can login 24/7 by using Student id and your password.\nhttp://localhost/myphp/school/sLogin.php\nThank you.";
-                $email=$_SESSION['semail']
+                $name=$_POST['name'];
+                $body="Dear ".$name.".\nWelcome in smart system of xyz public school.\nYou successfully created an account on our system with Student ID: ".$id.".\nYou can login 24/7 by using Student id and your password."."\nhttp://localhost/myphp/school/sLogin.php\nThank you.";
+                $email=$_SESSION['semail'];
                 if(mail($email,"XYZ PUBLIC SCHOOL",$body,"phpotpmanager@gmail.com")){
-                    $password_hash=password_hash($pass);
-                    $name=$_POST['name'];
+                    $password_hash=password_hash($pass,PASSWORD_DEFAULT);
                     $rollno=$_POST['rollno'];
                     $dob=$_POST['dob'];
                     $phone=$_POST['phone'];
@@ -51,13 +51,14 @@
                     $subject3=$_POST['subject3'];
                     $data1=mysqli_query($con,"INSERT INTO `s_login`(`S_id`, `email`, `password_hash`) VALUES ('$id','$email','$password_hash')");
                     $data1=mysqli_query($con,"INSERT INTO `s_details`(`S_id`, `phone`, `name`, `rollno`, `dob`, `class`, `subject1`, `subject2`, `subject3`) VALUES ('$id','$phone','$name','$rollno','$dob','$class','$subject1','$subject2','$subject3')"); 
+                    header("location:sHome.php");
                 }else{
                     $_SESSION['ERROR_IN_SIGNUP']=1;
                     header("location:sVerify.php");
                 }  
             }
         }
-    
+    }
 ?>
 <html>
     <head>
@@ -91,7 +92,7 @@
                     <option value="Chemistry">Chemistry</option>
                     <option value="Biology">Biology</option>
                 </select>
-                Subject2:<select name="subject1">
+                Subject2:<select name="subject2">
                     <option value="Science">Science</option>
                     <option value="Social Science">Social Science</option>
                     <option value="Mathematics">Mathematics</option>
@@ -99,7 +100,7 @@
                     <option value="Chemistry">Chemistry</option>
                     <option value="Biology">Biology</option>
                 </select>
-                Subject3:<select name="subject1">
+                Subject3:<select name="subject3">
                     <option value="Science">Science</option>
                     <option value="Social Science">Social Science</option>
                     <option value="Mathematics">Mathematics</option>
