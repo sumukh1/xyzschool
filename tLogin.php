@@ -4,6 +4,8 @@
         header("location:tHome.php");
     }else if(isset($_POST['B1'])){
         header("location:index.php");
+    }else if(isset($_POST['B3'])){
+        header("location:tVerify.php");
     }else if(isset($_POST['B2'])){
         if((!isset($_POST['id']))||$_POST['id']==""){
             echo "<p align='center'><font color='red'>Please Enter teacher ID/email!</font></p>";
@@ -49,7 +51,8 @@
                 Teacher ID/Email:<input type="text" name="id"><br>
                 Password:<input type="password" name="password"><br>
                 <button type="submit" name="B2"> Login </button><br><br>
-                <button type="submit" name="B1"> Home </button><br>
+                <button type="submit" name="B1"> Home </button>
+                <button type="submit" name="B3"> New user? </button>
             </form>
         </b>
     </body>
