@@ -82,7 +82,7 @@
                     <option value="10">10th</option>
                     <option value="11">11th</option>
                     <option value="12">12th</option>
-                </select>
+                </select><br>
                 Note.(Select only three important subjects)<br>
                 Subject1:<select name="subject1">
                     <option value="Science">Science</option>
@@ -91,7 +91,7 @@
                     <option value="Physics">Physics</option>
                     <option value="Chemistry">Chemistry</option>
                     <option value="Biology">Biology</option>
-                </select>
+                </select><br>
                 Subject2:<select name="subject2">
                     <option value="Science">Science</option>
                     <option value="Social Science">Social Science</option>
@@ -99,7 +99,7 @@
                     <option value="Physics">Physics</option>
                     <option value="Chemistry">Chemistry</option>
                     <option value="Biology">Biology</option>
-                </select>
+                </select><br>
                 Subject3:<select name="subject3">
                     <option value="Science">Science</option>
                     <option value="Social Science">Social Science</option>
@@ -107,7 +107,7 @@
                     <option value="Physics">Physics</option>
                     <option value="Chemistry">Chemistry</option>
                     <option value="Biology">Biology</option>
-                </select>
+                </select><br>
                 Note.(password lenght is between 8 to 16 character)<br>
                 Password:<input type="password" name="password"><br>
                 Confirm password:<input type="password" name="cpassword"><br>

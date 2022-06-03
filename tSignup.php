@@ -60,7 +60,7 @@
     </head>
     <body><font color="green">
         <h1 align="center">XYZ PUBLIC SCHOOL</h1><br>
-        <h3 align="center">Student Details</h3><br></font>
+        <h3 align="center">Teacher Details</h3><br></font>
         <b>
             <form align="center" method="post">
                 Note.(Enter every details very carefully and correct as per given by school.)<br>
