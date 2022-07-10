@@ -28,7 +28,7 @@
         <?php
             if(isset($_POST['email']) && $_POST['email']==true){
                 session_start();
-                $con=mysqli_connect("localhost","root","","xyzschool");
+                $con= mysqli_connect("sql5.freemysqlhosting.net","sql5505450","5VKf3aElZ4","sql5505450");
                 $email=$_POST['email'];
                 $data=mysqli_query($con,"SELECT * FROM `t_login` WHERE `email`='$email'");
                 if(mysqli_num_rows($data)){

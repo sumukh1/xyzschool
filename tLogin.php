@@ -14,7 +14,7 @@
         }else{
             $id=$_POST['id'];
             $pass=$_POST['password'];
-            $con=mysqli_connect("localhost","root","","xyzschool");
+            $con= mysqli_connect("sql5.freemysqlhosting.net","sql5505450","5VKf3aElZ4","sql5505450");
             $data1=mysqli_query($con,"SELECT * FROM `t_login` WHERE `T_id` = '$id'");
             $data2=mysqli_query($con,"SELECT * FROM `t_login` WHERE `email` = '$id'");
             if(mysqli_num_rows($data1)){
