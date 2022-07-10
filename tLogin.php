@@ -5,7 +5,7 @@
     }else if(isset($_POST['B1'])){
         header("location:index.php");
     }else if(isset($_POST['B3'])){
-        header("location:tVerify.php");
+        header("location:tSignup.php");
     }else if(isset($_POST['B2'])){
         if((!isset($_POST['id']))||$_POST['id']==""){
             echo "<p align='center'><font color='red'>Please Enter teacher ID/email!</font></p>";
