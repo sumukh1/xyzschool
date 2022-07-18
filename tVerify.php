@@ -37,7 +37,22 @@
                 }else{
                     $otp=rand(10000,99999);
                     $body="OTP:".$otp."\nDon't Share it.";
-                    if(mail($email,"OTP",$body,"phpotpmanager@gmail.com")){
+                    require 'phpmailer/PHPMailerAutoload.php';
+                    $mail = new PHPMailer;
+                    $mail->Host = 'smtp.gmail.com';
+                    $mail->Port = 587;
+                    $mail->SMTPAuth = true;
+                    $mail->SMTPSecure= tls;
+                    $mail->Username = 'phpotpmanager@gmail.com';
+                    $mail->Password = 'ropwcoyhcmiqsywf';
+
+                    $mail->setFrom('phpotpmanager@gmail.com');
+                    $mail->addAddress($email);
+
+                    $mail->Subject = "OTP";
+                    $mail->Body = $body;
+
+                    if($mail->send()){
                         $_SESSION['email']=$email;
                         echo "<p align='center'><font color='green'>OTP sended on your email.</font></p>";
                         echo "OTP:<input type='number' name='otp'><br>";
