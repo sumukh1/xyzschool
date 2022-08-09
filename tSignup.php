@@ -49,41 +49,41 @@
 
                 $mail = new PHPMailer(true);
 
-                    try {
-                        //Server settings               
-                        $mail->isSMTP();                                            //Send using SMTP
-                        $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-                        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-                        $mail->Username   = 'phpotpmanager@gmail.com';                     //SMTP username
-                        $mail->Password   = 'ropwcoyhcmiqsywf';                               //SMTP password
-                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-                        $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+                try {
+                    //Server settings               
+                    $mail->isSMTP();                                            //Send using SMTP
+                    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+                    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+                    $mail->Username   = 'phpotpmanager@gmail.com';                     //SMTP username
+                    $mail->Password   = 'ropwcoyhcmiqsywf';                               //SMTP password
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+                    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
                     
-                        //Recipients
-                        $mail->setFrom('phpotpmanager@gmail.com', 'XYZ PUBLIC SCHOOL');
-                        $mail->addAddress($email);       
-                    
-                        //Content
-                        $mail->isHTML(true);                                  //Set email format to HTML
-                        $mail->Subject = 'School verifying you.';
-                        $mail->Body    = $body1;
-                        $mail->AltBody = $body;
+                    //Recipients
+                    $mail->setFrom('phpotpmanager@gmail.com', 'XYZ PUBLIC SCHOOL');
+                    $mail->addAddress($email);       
+                
+                    //Content
+                    $mail->isHTML(true);                                  //Set email format to HTML
+                    $mail->Subject = 'School verifying you.';
+                    $mail->Body    = $body1;
+                    $mail->AltBody = $body;
 
-
-                if($mail->send()){
-                    $password_hash=password_hash($pass,PASSWORD_DEFAULT);
-                    $dob=$_POST['dob'];
-                    $phone=$_POST['phone'];
-                    $qualification=$_POST['qualification'];
-                    $dept=$_POST['dept'];
-                    $post=$_POST['post'];
-                    $data1=mysqli_query($con,"INSERT INTO `t_login`(`T_id`, `email`, `password_hash`) VALUES ('$id','$email','$password_hash')");
-                    $data1=mysqli_query($con,"INSERT INTO `t_details`(`T_id`, `phone`, `name`, `dob`, `qualification`, `department`, `post`) VALUES ('$id','$phone','$name','$dob','$qualification','$dept','$post')"); 
-                    header("location:tHome.php");
-                }else{
-                    $_SESSION['ERROR_IN_SIGNUP']=1;
-                    header("location:tVerify.php");
-                }  
+                    if($mail->send()){
+                        $password_hash=password_hash($pass,PASSWORD_DEFAULT);
+                        $dob=$_POST['dob'];
+                        $phone=$_POST['phone'];
+                        $qualification=$_POST['qualification'];
+                        $dept=$_POST['dept'];
+                        $post=$_POST['post'];
+                        $data1=mysqli_query($con,"INSERT INTO `t_login`(`T_id`, `email`, `password_hash`) VALUES ('$id','$email','$password_hash')");
+                        $data1=mysqli_query($con,"INSERT INTO `t_details`(`T_id`, `phone`, `name`, `dob`, `qualification`, `department`, `post`) VALUES ('$id','$phone','$name','$dob','$qualification','$dept','$post')"); 
+                        header("location:tHome.php");
+                    }else{
+                        $_SESSION['ERROR_IN_SIGNUP']=1;
+                        header("location:tVerify.php");
+                    }  
+                }
             }
         }
     }
