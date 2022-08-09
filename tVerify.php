@@ -72,7 +72,7 @@
                         echo "<p align='center'><font color='green'>OTP is sent on your email.</font></p>";
                         echo "OTP:<input type='number' name='otp'><br>";
                     } catch (Exception $e) {
-                        echo "<p align='center'><font color='red'>Something went wrong (check internet connection).</font></p>";
+                        echo "<p align='center'><font color='red'>Something went wrong (check internet connection).{$mail->ErrorInfo}</font></p>";
                     }
                 }
             }
