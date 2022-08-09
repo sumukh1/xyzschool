@@ -44,6 +44,7 @@
                 }else{
                     $otp=rand(10000,99999);
                     $otpstr=(string)$otp;
+                    
                     $mail = new PHPMailer(true);
 
                     try {

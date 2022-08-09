@@ -1,5 +1,13 @@
 <?php
     session_start();
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
+        
+    require 'PHPMailer/src/Exception.php';
+    require 'PHPMailer/src/PHPMailer.php';
+    require 'PHPMailer/src/SMTP.php';
+
     if(!isset($_SESSION['temail'])||$_SESSION['temail']==0){
         header("location:tVerify.php");
     }else if(isset($_POST['B1'])){
@@ -34,9 +42,35 @@
                     $data=mysqli_query($con,"SELECT * FROM `t_login` WHERE `T_id`='$id'");
                 }
                 $name=$_POST['name'];
-                $body="Dear ".$name.".\nWelcome in smart system of xyz public school.\nYou successfully created an account on our system with Teacher ID: ".$id.".\nYou can login 24/7 by using Student id and your password."."\nhttp://localhost/myphp/school/tLogin.php\nThank you.";
+                $strid=(string)$id;
+                $body1="Dear ".$name.".<br>Welcome in smart system of xyz public school.<br>You successfully created an account on our system with Teacher <b>ID: ".$strid.".</b><br>You can login 24/7 by using Student id and your password."."<br>https://xyzschool.herokuapp.com/tLogin.php<br>Thank you.";
+                $body="Dear ".$name.".\nWelcome in smart system of xyz public school.\nYou successfully created an account on our system with Teacher ID: ".$id.".\nYou can login 24/7 by using Student id and your password."."\nhttps://xyzschool.herokuapp.com/tLogin.php\nThank you.";
                 $email=$_SESSION['temail'];
-                if(mail($email,"XYZ PUBLIC SCHOOL",$body,"phpotpmanager@gmail.com")){
+
+                $mail = new PHPMailer(true);
+
+                    try {
+                        //Server settings               
+                        $mail->isSMTP();                                            //Send using SMTP
+                        $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+                        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+                        $mail->Username   = 'phpotpmanager@gmail.com';                     //SMTP username
+                        $mail->Password   = 'ropwcoyhcmiqsywf';                               //SMTP password
+                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+                        $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+                    
+                        //Recipients
+                        $mail->setFrom('phpotpmanager@gmail.com', 'XYZ PUBLIC SCHOOL');
+                        $mail->addAddress($email);       
+                    
+                        //Content
+                        $mail->isHTML(true);                                  //Set email format to HTML
+                        $mail->Subject = 'School verifying you.';
+                        $mail->Body    = $body1;
+                        $mail->AltBody = $body;
+
+
+                if($mail->send()){
                     $password_hash=password_hash($pass,PASSWORD_DEFAULT);
                     $dob=$_POST['dob'];
                     $phone=$_POST['phone'];
