@@ -35,7 +35,6 @@
             require 'PHPMailer/src/SMTP.php';
 
             if(isset($_POST['email']) && $_POST['email']==true){
-                session_start();
                 $con= mysqli_connect("remotemysql.com","zRbyLsplba","r2ggFh5VVC","zRbyLsplba");
                 $email=$_POST['email'];
                 $data=mysqli_query($con,"SELECT * FROM `t_login` WHERE `email`='$email'");
@@ -44,7 +43,7 @@
                     echo "<p align='center'><font color='red'>Email is already register for teacher ID".$row['T_id'].".</font></p>";
                 }else{
                     $otp=rand(10000,99999);
-
+                    $otpstr=(string)$otp;
                     $mail = new PHPMailer(true);
 
                     try {
@@ -63,14 +62,17 @@
                     
                         //Content
                         $mail->isHTML(true);                                  //Set email format to HTML
-                        $mail->Subject = 'School verify you.';
-                        $mail->Body    = 'Dear Apllicant <br>Please verify you by OTP <b>'.$otp.'</b><br> Do not share it.';
-                        $mail->AltBody = 'Dear Apllicant Please verify you by OTP'$otp' Do not share it.';
+                        $mail->Subject = 'School verifying you.';
+                        $mail->Body    = 'Dear Apllicant <br>Please verify you by OTP <b>'.$otpstr.'</b><br> Do not share it.';
+                        $mail->AltBody = 'Dear Apllicant Please verify you by OTP'.$otpstr.' Do not share it.';
                     
                         $mail->send();
-                        echo "<p align='center'><font color='green'>Email is already register for teacher ID".$row['T_id'].".</font></p>";
+                        $_SESSION['email']=$email;
+                        $_SESSION['otp']=$otp;
+                        echo "<p align='center'><font color='green'>OTP is sent on your email.</font></p>";
+                        echo "OTP:<input type='number' name='otp'><br>";
                     } catch (Exception $e) {
-                        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                        echo "<p align='center'><font color='red'>Something went wrong (check internet connection).</font></p>";
                     }
                 }
             }

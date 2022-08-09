@@ -22,11 +22,11 @@
         //Recipients
         $mail->setFrom('phpotpmanager@gmail.com', 'XYZ PUBLIC SCHOOL');
         $mail->addAddress('sumukhagar041@gmail.com');       
-    
+        $x=(string)10;
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
         $mail->Subject = 'Here is the subject';
-        $mail->Body    = 'This is the HTML message body '1234'<b>in bold!</b>';
+        $mail->Body    = 'This is the HTML message body '.$x.'<b>in bold!</b>';
         $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
     
         $mail->send();
