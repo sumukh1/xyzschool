@@ -26,6 +26,14 @@
 	<form align = "center" method="post">
 		Teacher email:<input type="email" name="email">
         <?php
+            use PHPMailer\PHPMailer\PHPMailer;
+            use PHPMailer\PHPMailer\SMTP;
+            use PHPMailer\PHPMailer\Exception;
+        
+            require 'PHPMailer/src/Exception.php';
+            require 'PHPMailer/src/PHPMailer.php';
+            require 'PHPMailer/src/SMTP.php';
+
             if(isset($_POST['email']) && $_POST['email']==true){
                 session_start();
                 $con= mysqli_connect("remotemysql.com","zRbyLsplba","r2ggFh5VVC","zRbyLsplba");
@@ -36,29 +44,33 @@
                     echo "<p align='center'><font color='red'>Email is already register for teacher ID".$row['T_id'].".</font></p>";
                 }else{
                     $otp=rand(10000,99999);
-                    $body="OTP:".$otp."\nDon't Share it.";
-                    require 'phpmailer/PHPMailerAutoload.php';
-                    $mail = new PHPMailer;
-                    $mail->Host = 'smtp.gmail.com';
-                    $mail->Port = 587;
-                    $mail->SMTPAuth = true;
-                    $mail->SMTPSecure= tls;
-                    $mail->Username = 'phpotpmanager@gmail.com';
-                    $mail->Password = 'ropwcoyhcmiqsywf';
 
-                    $mail->setFrom('phpotpmanager@gmail.com');
-                    $mail->addAddress($email);
+                    $mail = new PHPMailer(true);
 
-                    $mail->Subject = "OTP";
-                    $mail->Body = $body;
-
-                    if($mail->send()){
-                        $_SESSION['email']=$email;
-                        echo "<p align='center'><font color='green'>OTP sended on your email.</font></p>";
-                        echo "OTP:<input type='number' name='otp'><br>";
-                        $_SESSION['otp']=$otp;
-                    }else{
-                    echo "<p align='center'><font color='red'>otp failled.. (check your internet connection!)</font></p>";
+                    try {
+                        //Server settings               
+                        $mail->isSMTP();                                            //Send using SMTP
+                        $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+                        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+                        $mail->Username   = 'phpotpmanager@gmail.com';                     //SMTP username
+                        $mail->Password   = 'ropwcoyhcmiqsywf';                               //SMTP password
+                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+                        $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+                    
+                        //Recipients
+                        $mail->setFrom('phpotpmanager@gmail.com', 'XYZ PUBLIC SCHOOL');
+                        $mail->addAddress($email);       
+                    
+                        //Content
+                        $mail->isHTML(true);                                  //Set email format to HTML
+                        $mail->Subject = 'School verify you.';
+                        $mail->Body    = 'Dear Apllicant <br>Please verify you by OTP <b>'.$otp.'</b><br> Do not share it.';
+                        $mail->AltBody = 'Dear Apllicant Please verify you by OTP'$otp' Do not share it.';
+                    
+                        $mail->send();
+                        echo "<p align='center'><font color='green'>Email is already register for teacher ID".$row['T_id'].".</font></p>";
+                    } catch (Exception $e) {
+                        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
                     }
                 }
             }
