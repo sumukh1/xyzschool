@@ -22,6 +22,7 @@
                 if(password_verify($pass,$row['password_hash'])){
                     $_SESSION['tlogin']=1;
                     $_SESSION['tid']=$row['T_id'];
+                    header("location:tHome.php");
                 }else{
                     echo "<p align='center'><font color='red'>Invalid password!</font></p>";
                 }
@@ -30,6 +31,7 @@
                 if(password_verify($pass,$row['password_hash'])){
                     $_SESSION['tlogin']=1;
                     $_SESSION['tid']=$row['T_id'];
+                    header("location:tHome.php");
                 }else{
                     echo "<p align='center'><font color='red'>Invalid password!</font></p>";
                 }
