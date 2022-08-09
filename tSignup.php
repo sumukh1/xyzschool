@@ -1,6 +1,6 @@
 <?php
     session_start();
-    if(!isset($_SESSION['temail'])){
+    if(!isset($_SESSION['temail'])||$_SESSION['temail']==0){
         header("location:tVerify.php");
     }else if(isset($_POST['B1'])){
         header("location:index.php");
