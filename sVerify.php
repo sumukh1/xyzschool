@@ -28,7 +28,7 @@
         <?php
             if(isset($_POST['email']) && $_POST['email']!=""){
                 session_start();
-                $con=mysqli_connect("localhost","root","","xyzschool");
+                $con= mysqli_connect("remotemysql.com","zRbyLsplba","r2ggFh5VVC","zRbyLsplba");
                 $email=$_POST['email'];
                 $data=mysqli_query($con,"SELECT * FROM `s_login` WHERE `email`='$email'");
                 if(mysqli_num_rows($data)){

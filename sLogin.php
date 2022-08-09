@@ -14,7 +14,7 @@
         }else{
             $id=$_POST['id'];
             $pass=$_POST['password'];
-            $con=mysqli_connect("localhost","root","","xyzschool");
+            $con= mysqli_connect("remotemysql.com","zRbyLsplba","r2ggFh5VVC","zRbyLsplba");
             $data1=mysqli_query($con,"SELECT * FROM `s_login` WHERE `S_id` = '$id'");
             $data2=mysqli_query($con,"SELECT * FROM `s_login` WHERE `email` = '$id'");
             if(mysqli_num_rows($data1)){

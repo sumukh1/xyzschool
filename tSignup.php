@@ -26,7 +26,7 @@
             if(!(strlen($pass)>=8 && $pass==$_POST['cpassword'])){
                 echo "<p align='center'><font color='red'>Enter valid password!</font></p>";
             }else{
-                $con= mysqli_connect("sql5.freemysqlhosting.net","sql5505450","5VKf3aElZ4","sql5505450");
+                $con= mysqli_connect("remotemysql.com","zRbyLsplba","r2ggFh5VVC","zRbyLsplba");
                 $id=rand(1000,9999);
                 $data=mysqli_query($con,"SELECT * FROM `t_login` WHERE `T_id`='$id'");
                 while(mysqli_num_rows($data)){

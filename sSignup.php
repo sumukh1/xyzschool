@@ -30,7 +30,7 @@
             if(!(strlen($pass)>=8 && $pass==$_POST['cpassword'])){
                 echo "<p align='center'><font color='red'>Enter valid password!</font></p>";
             }else{
-                $con=mysqli_connect("localhost","root","","xyzschool");
+                $con= mysqli_connect("remotemysql.com","zRbyLsplba","r2ggFh5VVC","zRbyLsplba");
                 $id=rand(1000,9999);
                 $data=mysqli_query($con,"SELECT * FROM `s_login` WHERE `S_id`='$id'");
                 while(mysqli_num_rows($data)){

@@ -12,7 +12,7 @@
         }else{
             $id=$_POST['id'];
             $pass=$_POST['password'];
-            $con=mysqli_connect("localhost","root","","xyzschool");
+            $con= mysqli_connect("remotemysql.com","zRbyLsplba","r2ggFh5VVC","zRbyLsplba");
             $data1=mysqli_query($con,"SELECT * FROM `a_login` WHERE `A_id` = '$id'");
             if(mysqli_num_rows($data1)){
                 $row=mysqli_fetch_assoc($data1);
