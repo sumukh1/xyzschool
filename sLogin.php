@@ -47,7 +47,7 @@
     </head>
     <body><font color="green">
         <h1 align="center">XYZ PUBLIC SCHOOL</h1><br>
-        <h3 align="center">Student Portal</h3><br></font>
+        <h3 align="center">Student Login</h3><br></font>
         <b>
             <form align="center" method="post">
                 Student ID/Email:<input type="text" name="id"><br>

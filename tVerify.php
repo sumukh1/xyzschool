@@ -22,7 +22,7 @@
 <b>
     <font color="green">
         <h1 align="center">XYZ PUBLIC SCHOOL</h1><br>
-        <h3 align="center">REGISTER YOURSELF</h3><br>
+        <h3 align="center">REGISTER YOURSELF AS TEACHER</h3><br>
 	<form align = "center" method="post">
 		Teacher email:<input type="email" name="email">
         <?php

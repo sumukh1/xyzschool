@@ -1,6 +1,14 @@
 <?php
     session_start();
-    if(!isset($_SESSION['semail'])){
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
+        
+    require 'PHPMailer/src/Exception.php';
+    require 'PHPMailer/src/PHPMailer.php';
+    require 'PHPMailer/src/SMTP.php';
+
+    if(!isset($_SESSION['semail'])||$_SESSION['semail']==0){
         header("location:sVerify.php");
     }else if(isset($_POST['B1'])){
         header("location:index.php");
@@ -38,24 +46,54 @@
                     $data=mysqli_query($con,"SELECT * FROM `s_login` WHERE `S_id`='$id'");
                 }
                 $name=$_POST['name'];
-                $body="Dear ".$name.".\nWelcome in smart system of xyz public school.\nYou successfully created an account on our system with Student ID: ".$id.".\nYou can login 24/7 by using Student id and your password."."\nhttp://localhost/myphp/school/sLogin.php\nThank you.";
+                $strid=(string)$id;
+                $body1="Dear ".$name.".<br>Welcome in smart system of xyz public school.<br>You successfully created an account on our system with Student ID: ".$strid.".<br>You can login 24/7 by using Student id and your password."."<br>https://xyzschool.herokuapp.com/sLogin.php<br>Thank you.";
+                $body="Dear ".$name.".\nWelcome in smart system of xyz public school.\nYou successfully created an account on our system with Student ID: ".$id.".\nYou can login 24/7 by using Student id and your password."."\nhttps://xyzschool.herokuapp.com/sLogin.php\nThank you.";
                 $email=$_SESSION['semail'];
-                if(mail($email,"XYZ PUBLIC SCHOOL",$body,"phpotpmanager@gmail.com")){
-                    $password_hash=password_hash($pass,PASSWORD_DEFAULT);
-                    $rollno=$_POST['rollno'];
-                    $dob=$_POST['dob'];
-                    $phone=$_POST['phone'];
-                    $class=$_POST['class'];
-                    $subject1=$_POST['subject1'];
-                    $subject2=$_POST['subject2'];
-                    $subject3=$_POST['subject3'];
-                    $data1=mysqli_query($con,"INSERT INTO `s_login`(`S_id`, `email`, `password_hash`) VALUES ('$id','$email','$password_hash')");
-                    $data1=mysqli_query($con,"INSERT INTO `s_details`(`S_id`, `phone`, `name`, `rollno`, `dob`, `class`, `subject1`, `subject2`, `subject3`) VALUES ('$id','$phone','$name','$rollno','$dob','$class','$subject1','$subject2','$subject3')"); 
-                    header("location:sHome.php");
-                }else{
-                    $_SESSION['ERROR_IN_SIGNUP']=1;
-                    header("location:sVerify.php");
-                }  
+
+                $mail = new PHPMailer(true);
+
+                try {
+                    //Server settings               
+                    $mail->isSMTP();                                            //Send using SMTP
+                    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+                    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+                    $mail->Username   = 'phpotpmanager@gmail.com';                     //SMTP username
+                    $mail->Password   = 'ropwcoyhcmiqsywf';                               //SMTP password
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+                    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+                    
+                    //Recipients
+                    $mail->setFrom('phpotpmanager@gmail.com', 'XYZ PUBLIC SCHOOL');
+                    $mail->addAddress($email);       
+                
+                    //Content
+                    $mail->isHTML(true);                                  //Set email format to HTML
+                    $mail->Subject = 'School verifying you.';
+                    $mail->Body    = $body1;
+                    $mail->AltBody = $body;
+
+                    if($mail->send()){
+                        $password_hash=password_hash($pass,PASSWORD_DEFAULT);
+                        $rollno=$_POST['rollno'];
+                        $dob=$_POST['dob'];
+                        $phone=$_POST['phone'];
+                        $class=$_POST['class'];
+                        $subject1=$_POST['subject1'];
+                        $subject2=$_POST['subject2'];
+                        $subject3=$_POST['subject3'];
+                        $data1=mysqli_query($con,"INSERT INTO `s_login`(`S_id`, `email`, `password_hash`) VALUES ('$id','$email','$password_hash')");
+                        $data1=mysqli_query($con,"INSERT INTO `s_details`(`S_id`, `phone`, `name`, `rollno`, `dob`, `class`, `subject1`, `subject2`, `subject3`) VALUES ('$id','$phone','$name','$rollno','$dob','$class','$subject1','$subject2','$subject3')"); 
+                        $_SESSION['slogin']=1;
+                        $_SESSION['sid']=$id;
+                        header("location:sHome.php");
+                    }else{
+                        $_SESSION['ERROR_IN_SIGNUP']=1;
+                        header("location:sVerify.php");
+                    }
+                }catch (Exception $e) {
+                    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                }
             }
         }
     }
