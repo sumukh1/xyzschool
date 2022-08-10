@@ -1,7 +1,7 @@
 <?php
     session_start();
     if(!isset($_SESSION['tlogin'])|| $_SESSION['tlogin']!=1){
-        header("location:tHome.php");
+        header("location:tLogin.php");
     }elseif(isset($_GET['updateprofile'])){
         header("location:tUpdateProfile.php");
     }elseif(isset($_GET['showtt'])){
