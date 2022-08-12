@@ -1,6 +1,8 @@
 <?php
     session_start();
-    if(isset($_GET['B1'])){
+    if(!isset($_SESSION['slogin'])|| $_SESSION['slogin']!=1){
+        header("location:sLogin.php");
+    }else if(isset($_GET['B1'])){
         header("location:sUpdate.php");
     }else if(isset($_GET['B2'])){
         header("location:sTimeTable.php");

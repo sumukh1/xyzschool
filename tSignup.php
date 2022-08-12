@@ -78,6 +78,7 @@
                         $post=$_POST['post'];
                         $data1=mysqli_query($con,"INSERT INTO `t_login`(`T_id`, `email`, `password_hash`) VALUES ('$id','$email','$password_hash')");
                         $data1=mysqli_query($con,"INSERT INTO `t_details`(`T_id`, `phone`, `name`, `dob`, `qualification`, `department`, `post`) VALUES ('$id','$phone','$name','$dob','$qualification','$dept','$post')"); 
+                        
                         $_SESSION['tlogin']=1;
                         $_SESSION['tid']=$id;
                         header("location:tHome.php");

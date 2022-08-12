@@ -12,6 +12,8 @@
         header("location:tFeedback.php");
     }elseif(isset($_GET['logout'])){
         header("location:tLogout.php");
+    }elseif(isset($_GET['cpassword'])){
+        header("location:tCpassword.php");
     }
     
 ?>
@@ -33,7 +35,8 @@
 				<td align="center"><button type="submit" name="feedback">Feedback</button></td>
 			</tr>
 			<tr>
-				<td align="center" colspan="2"><button type="submit" name="logout">Log Out</button></td>
+                <td align="center"><button type="submit" name="cpassword">Change Password</button></td>
+				<td align="center"><button type="submit" name="logout">Log Out</button></td>
 			</tr>
 		</table>
         </form>

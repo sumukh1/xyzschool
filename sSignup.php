@@ -84,6 +84,7 @@
                         $subject3=$_POST['subject3'];
                         $data1=mysqli_query($con,"INSERT INTO `s_login`(`S_id`, `email`, `password_hash`) VALUES ('$id','$email','$password_hash')");
                         $data1=mysqli_query($con,"INSERT INTO `s_details`(`S_id`, `phone`, `name`, `rollno`, `dob`, `class`, `subject1`, `subject2`, `subject3`) VALUES ('$id','$phone','$name','$rollno','$dob','$class','$subject1','$subject2','$subject3')"); 
+                        
                         $_SESSION['slogin']=1;
                         $_SESSION['sid']=$id;
                         header("location:sHome.php");
