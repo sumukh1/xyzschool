@@ -34,7 +34,7 @@
             if(!(strlen($pass)>=8 && $pass==$_POST['cpassword'])){
                 echo "<p align='center'><font color='red'>Enter valid password!</font></p>";
             }else{
-                $con= mysqli_connect("remotemysql.com","zRbyLsplba","r2ggFh5VVC","zRbyLsplba");
+                include 'sqlConnection.php';
                 $id=rand(1000,9999);
                 $data=mysqli_query($con,"SELECT * FROM `t_login` WHERE `T_id`='$id'");
                 while(mysqli_num_rows($data)){
@@ -43,8 +43,8 @@
                 }
                 $name=$_POST['name'];
                 $strid=(string)$id;
-                $body1="Dear ".$name.".<br>Welcome in smart system of xyz public school.<br>You successfully created an account on our system with Teacher <b>ID: ".$strid.".</b><br>You can login 24/7 by using Student id and your password."."<br>https://xyzschool.herokuapp.com/tLogin.php<br>Thank you.";
-                $body="Dear ".$name.".\nWelcome in smart system of xyz public school.\nYou successfully created an account on our system with Teacher ID: ".$id.".\nYou can login 24/7 by using Student id and your password."."\nhttps://xyzschool.herokuapp.com/tLogin.php\nThank you.";
+                $body1="<span class='badge bg-secondary'>XYZ PUBLIC SCHOOL</span>Dear ".$name.".<br>Welcome in smart system of xyz public school.<br>You successfully created an account on our system with Teacher <b>ID: ".$strid.".</b><br>You can login 24/7 by using Student id and your password."."<br>Thank you.";
+                $body="Dear ".$name.".\nWelcome in smart system of xyz public school.\nYou successfully created an account on our system with Teacher ID: ".$id.".\nYou can login 24/7 by using Student id and your password."."\nThank you.";
                 $email=$_SESSION['temail'];
 
                 $mail = new PHPMailer(true);
@@ -54,13 +54,13 @@
                     $mail->isSMTP();                                            //Send using SMTP
                     $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
                     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-                    $mail->Username   = 'phpotpmanager@gmail.com';                     //SMTP username
-                    $mail->Password   = 'ropwcoyhcmiqsywf';                               //SMTP password
+                    $mail->Username   = 'phpsumukh@gmail.com';                     //SMTP username
+                    $mail->Password   = 'qhojibdkqlheocav';                               //SMTP password
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
                     $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
                     
                     //Recipients
-                    $mail->setFrom('phpotpmanager@gmail.com', 'XYZ PUBLIC SCHOOL');
+                    $mail->setFrom('phpsumukh@gmail.com', 'XYZ PUBLIC SCHOOL');
                     $mail->addAddress($email);       
                 
                     //Content
@@ -94,29 +94,52 @@
     }
 ?>
 <html>
-    <head>
+<head>
         <title>XYZ PUBLIC SCHOOL</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     </head>
     <body><font color="green">
-        <h1 align="center">XYZ PUBLIC SCHOOL</h1><br>
-        <h3 align="center">Teacher Details</h3><br></font>
-        <b>
-            <form align="center" method="post">
-                Note.(Enter every details very carefully and correct as per given by school.)<br>
-                Teacher Name:<input type="text" name="name"><br>
-                Date of Birth:<input type="date" name="dob"><br>
-                Phone:<input type="number" name="phone"><br>
-                Qualification:<select name="qualification">
-                    <option value="intermediate">Intermediate(10+2)</option>
+
+
+    <br>
+    <div class="container">
+  <h1 align="center"><span class="badge bg-secondary">XYZ PUBLIC SCHOOL</span></h1>
+</div>
+    <div class="container mt-3">
+  <h2>Enter your details</h2>
+  <form method="POST">
+    <div class="alert alert-info">
+            <strong>Note.</strong> Enter every details very carefully and correct as per given by school.
+    </div>
+    <div class="mb-3 mt-3"> 
+      <label for="name">Name:</label>
+      <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+    </div>
+    <div class="mb-3 mt-3"> 
+      <label for="dob">Date of Birth:</label>
+      <input type="date" class="form-control" id="dob" placeholder="Enter dob" name="dob">
+    </div>
+    <div class="mb-3 mt-3"> 
+      <label for="phone">Phone:</label>
+      <input type="number" class="form-control" id="phone" placeholder="Enter phone number" name="phone">
+    </div>
+    <div class="mb-3 mt-3"> 
+      <label for="qualification">Qualification:</label>
+    <select class="form-select mt-3" name="qualification">
+    <option value="intermediate">Intermediate(10+2)</option>
                     <option value="graduation">Graduation(3 years)</option>
                     <option value="post graduation">Post graduation(2 years)</option>
                     <option value="btech">B-tech</option>
                     <option value="mtech">M-tech</option>
                     <option value="phd">PHD</option>
                     <option value="mbbs">MBBS</option>
-                </select><br>
-                Department:<select name="dept">
-                    <option value="Social Science">Social Science</option>
+   </select>
+    </div>
+    <div class="mb-3 mt-3"> 
+      <label for="department">Department:</label>
+    <select class="form-select mt-3" name="dept">
+    <option value="Social Science">Social Science</option>
                     <option value="Mathematics">Mathematics</option>
                     <option value="Physics">Physics</option>
                     <option value="Chemistry">Chemistry</option>
@@ -124,20 +147,30 @@
                     <option value="Commerce">Commerce</option>
                     <option value="Computer">Computer</option>
                     <option value="Managment">Managment</option>
-                </select><br>
-                Post:<select name="post">
-                    <option value="Senior Teacher">Senior Teacher</option>
-                    <option value="Junior Teacher">Junior Teacher</option>
-                    <option value="Asistant">Asistant</option>
-                    <option value="Intern">Intern</option>
-                </select><br>
-                Note.(password lenght is between 8 to 16 character)<br>
-                Password:<input type="password" name="password"><br>
-                Confirm password:<input type="password" name="cpassword"><br>
-                <button type="submit" name="B3"> Submit </button><br>
-                <button type="submit" name="B2"> Login </button>
-                <button type="submit" name="B1"> Home </button> 
-            </form>
-        </b>
+    </select>
+    </div>
+    <div class="mb-3 mt-3"> 
+        <label for="post">Post:</label>
+        <select class="form-select mt-3" name="post">
+                <option value="Senior Teacher">Senior Teacher</option>
+                <option value="Junior Teacher">Junior Teacher</option>
+                <option value="Asistant">Asistant</option>
+                <option value="Intern">Intern</option>
+        </select>
+    </div>
+    <div class="alert alert-info">
+            <strong>Note.</strong> password lenght is between 8 to 16 character.
+    </div>
+    <div class="mb-3 mt-3"> 
+      <label for="password">Password:</label>
+      <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
+    </div>
+    <div class="mb-3 mt-3"> 
+      <label for="cpassword">Confirm password:</label>
+      <input type="password" class="form-control" id="password" placeholder="Enter password" name="cpassword">
+    </div>
+    <button type="submit" class="btn btn-primary" name="B3"> Submit </button><br><br>
+    <button type="submit" class="badge bg-secondary" name="B2"> Login </button> 
+    <button type="submit" class="badge bg-secondary" name="B1"> Home </button>
     </body>
 </html>

@@ -17,14 +17,24 @@
     }
 ?>
 <html>
+<head>
+        <title>XYZ PUBLIC SCHOOL</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    </head>
 <body>
-<p align="center">
-<b>
-    <font color="green">
-        <h1 align="center">XYZ PUBLIC SCHOOL</h1><br>
-        <h3 align="center">REGISTER YOURSELF AS STUDENT</h3><br>
-	<form align = "center" method="post">
-		Student email:<input type="email" name="email">
+
+<br>
+    <div class="container">
+  <h1 align="center"><span class="badge bg-secondary">XYZ PUBLIC SCHOOL</span></h1>
+</div>
+    <div class="container mt-3">
+  <h2>REGISTER YOURSELF AS STUDENT</h2>
+  <form method="POST">
+    <div class="mb-3 mt-3">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+    </div>
         <?php
             use PHPMailer\PHPMailer\PHPMailer;
             use PHPMailer\PHPMailer\SMTP;
@@ -35,7 +45,7 @@
             require 'PHPMailer/src/SMTP.php';
 
             if(isset($_POST['email']) && $_POST['email']==true){
-                $con= mysqli_connect("remotemysql.com","zRbyLsplba","r2ggFh5VVC","zRbyLsplba");
+                include 'sqlConnection.php';
                 $email=$_POST['email'];
                 $data=mysqli_query($con,"SELECT * FROM `s_login` WHERE `email`='$email'");
                 if(mysqli_num_rows($data)){
@@ -52,38 +62,36 @@
                         $mail->isSMTP();                                            //Send using SMTP
                         $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
                         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-                        $mail->Username   = 'phpotpmanager@gmail.com';                     //SMTP username
-                        $mail->Password   = 'ropwcoyhcmiqsywf';                               //SMTP password
+                        $mail->Username   = 'phpsumukh@gmail.com';                     //SMTP username
+                        $mail->Password   = 'qhojibdkqlheocav';                               //SMTP password
                         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
                         $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
                     
                         //Recipients
-                        $mail->setFrom('phpotpmanager@gmail.com', 'XYZ PUBLIC SCHOOL');
-                        $mail->addAddress($email);       
+                        $mail->setFrom('phpsumukh@gmail.com', 'XYZ PUBLIC SCHOOL');
+                        $mail->addAddress($email);             
                     
                         //Content
                         $mail->isHTML(true);                                  //Set email format to HTML
                         $mail->Subject = 'School verifying you.';
-                        $mail->Body    = 'Dear Apllicant <br>Please verify you by OTP <b>'.$otpstr.'</b><br> Do not share it.';
+                        $mail->Body    = '<span class="badge bg-secondary">XYZ PUBLIC SCHOOL</span>Dear Apllicant <br>Please verify you by OTP <b><span class="badge bg-secondary">'.$otpstr.'</span></b><br> Do not share it.';
                         $mail->AltBody = 'Dear Apllicant Please verify you by OTP'.$otpstr.' Do not share it.';
                     
                         $mail->send();
                         $_SESSION['email']=$email;
                         $_SESSION['otp']=$otp;
                         echo "<p align='center'><font color='green'>OTP is sent on your email.</font></p>";
-                        echo "OTP:<input type='number' name='otp'><br>";
+                        echo "<div class='mb-3'><label for='pwd'>OTP:</label><input type='number' class='form-control' id='pwd' placeholder='Enter otp' name='otp'></div>";
                     } catch (Exception $e) {
                         echo "<p align='center'><font color='red'>Something went wrong (check internet connection).{$mail->ErrorInfo}</font></p>";
                     }
                 }
             }
         ?>
-		<button type="submit">Register</button>
-        <br><br>
-        <button type="submit" name="Bt2">Home</button>
-        <button type="submit" name="Bt3">Sign In</button>
-	</form>
-</b>
-</p>
+        <button type="submit" class="btn btn-primary"> Register </button><br><br>
+    <button type="submit" class="badge bg-secondary" name="Bt2"> Home </button> 
+    <button type="submit" class="badge bg-secondary" name="Bt3"> Sign In </button>
+  </form>
+</div>
 </body>
 </html>
